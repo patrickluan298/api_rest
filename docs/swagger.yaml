@@ -1,0 +1,286 @@
+openapi: 3.0.3
+
+info:
+  version: '1.0'
+  title: API REST
+servers:
+- description: Localhost
+  url: http://localhost:1323/swagger/
+paths:
+  /health:
+    get:
+      summary: Verifica a funcionalidade do serviço
+      tags:
+        - Health Check
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Aplicação rodando com sucesso
+                  status:
+                    type: string
+                    example: OK
+        404:
+          description: Erro na funcionalidade do serviço
+          content:
+            application/json:
+              example: "Not found"
+  /estabelecimentos:
+    post:
+      summary: Cadastra um novo estabelecimento
+      tags:
+        - Estabelecimentos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/estabelecimento"
+      responses:
+        201:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estabelecimento"
+        404:
+          description: Erro ao cadastrar o estabelecimento
+          content:
+            application/json:
+              example: "Not found"
+    get:
+      summary: Busca todos os estabelecimentos
+      tags:
+        - Estabelecimentos
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/estabelecimento"
+        404:
+          description: Erro ao buscar os estabelecimentos
+          content:
+            application/json:
+              example: "Not found"
+  /estabelecimentos/{NumEstabelecimento}:
+    parameters:
+    - name: NumEstabelecimento
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Busca um estabelecimento pelo seu número
+      tags:
+        - Estabelecimentos
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estabelecimento"
+        404:
+          description: Erro ao buscar o estabelecimento
+          content:
+            application/json:
+              example: "Not found"
+    put:
+      summary: Atualiza um estabelecimento pelo seu número
+      tags:
+        - Estabelecimentos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/estabelecimento"
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estabelecimento"
+        404:
+          description: Erro ao atualizar o estabelecimento
+          content:
+            application/json:
+              example: "Not found"
+    delete:
+      summary: Deleta um estabelecimento pelo seu número
+      tags:
+        - Estabelecimentos
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estabelecimento"
+        404:
+          description: Erro ao deletar o estabelecimento
+          content:
+            application/json:
+              example: "Not found"
+  /lojas:
+    post:
+      summary: Cadastra uma nova loja
+      tags:
+        - Lojas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/loja"
+      responses:
+        201:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/loja"
+        404:
+          description: Erro ao cadastrar a loja
+          content:
+            application/json:
+              example: "Not found"
+    get:
+      summary: Busca todas as lojas
+      tags:
+        - Lojas
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/loja"
+        404:
+          description: Erro ao buscar as lojas
+          content:
+            application/json:
+              example: "Not found"
+  /lojas/{NumLoja}:
+    parameters:
+    - name: NumLoja
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Busca uma loja pelo seu número
+      tags:
+        - Lojas
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/loja"
+        404:
+          description: Erro ao buscar a loja
+          content:
+            application/json:
+              example: "Not found"
+    put:
+      summary: Atualiza uma loja pelo seu número
+      tags:
+        - Lojas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/loja"
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/loja"
+        404:
+          description: Erro ao atualizar a loja
+          content:
+            application/json:
+              example: "Not found"
+    delete:
+      summary: Deleta uma loja pelo seu número
+      tags:
+        - Lojas
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/loja"
+        404:
+          description: Erro ao deletar o estabelecimento
+          content:
+            application/json:
+              example: "Not found"
+components:
+  schemas:
+    estabelecimento:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Shopping Manaíra
+        razao social:
+          type: string
+          example: Shopping Manaíra Compras e Vendas
+        endereco:
+          type: string
+          example: Avenida Espírito Santo
+        estado:
+          type: string
+          example: Paraíba
+        cidade:
+          type: string
+          example: João Pessoa
+        cep:
+          type: string
+          example: 65169698
+        numero do estabelecimento:
+          type: integer
+          example: 806
+    loja:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: O Boticário
+        razao social:
+          type: string
+          example: O Boticário Perfumaria
+        endereco:
+          type: string
+          example: Avenida Espírito Santo
+        estado:
+          type: string
+          example: Paraíba
+        cidade:
+          type: string
+          example: João Pessoa
+        cep:
+          type: string
+          example: 65169698
+        numero da loja:
+          type: integer
+          example: 85
+        id do estabelecimento:
+          type: integer
+          example: 806
